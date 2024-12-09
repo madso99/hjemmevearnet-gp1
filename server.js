@@ -1,10 +1,12 @@
 const http = require('http');
-const OpenAI = require('openai');
+const { OpenAI } = require('openai'); // Importer OpenAI-klienten
 const fs = require('fs');
 const path = require('path');
-const dotenv = require("dotenv");  // For at bruge .env-filen
+const dotenv = require('dotenv'); // For at bruge .env-filen
 dotenv.config();
-const apiKey = process.env.API_KEY;
+
+// Initialiser OpenAI-klienten med API-nøglen
+const openai = new OpenAI({ apiKey: process.env.API_KEY });
 
 const server = http.createServer(async (req, res) => {
     // Serve static files
@@ -42,11 +44,14 @@ const server = http.createServer(async (req, res) => {
         req.on('end', async () => {
             try {
                 const { message } = JSON.parse(body);
+
+                // Lav anmodning til OpenAI API'et
                 const completion = await openai.chat.completions.create({
                     model: "gpt-3.5-turbo",
                     messages: [{ role: "user", content: message }]
                 });
-                
+
+                // Send OpenAI's svar tilbage til klienten
                 const aiResponse = completion.choices[0].message.content;
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ response: aiResponse }));
