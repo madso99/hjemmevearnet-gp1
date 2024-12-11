@@ -13,7 +13,7 @@ let documents = []; // Lager til dokumenter
 
 // Funktion til at læse og ekstrahere tekst fra PDF-filer
 async function loadPDFDocuments() {
-    const pdfFiles = ['./docs/9000-120-02-Didaktiske-Design-Overvejelser-1.pdf', './docs/Faglaerer-i-Haeren.pdf', './docs/Instruktoervirke-i-Forsvaret.pdf']; // Angiv dine PDF-filer her
+    const pdfFiles = ['./docs/9000-120-02-Didaktiske-Design-Overvejelser-1.pdf', './docs/Faglærer-i-Hæren.pdf', './docs/Instruktørvirke-i-Forsvaret.pdf']; // Angiv dine PDF-filer her
     for (const filePath of pdfFiles) {
         const fileBuffer = fs.readFileSync(filePath);
         const pdfData = await pdfParse(fileBuffer);
